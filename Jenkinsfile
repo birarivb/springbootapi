@@ -6,7 +6,7 @@ pipeline {
         maven 'Maven3'
     }
 	environment {
-        SONAR_TOKEN = credentials('sonar-token')
+        SONAR_TOKEN = credentials('sonar-tokens')
     }
 
     stages {
