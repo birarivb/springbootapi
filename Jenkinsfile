@@ -5,6 +5,9 @@ pipeline {
         jdk 'JDK21'
         maven 'Maven3'
     }
+	environment {
+        SONAR_TOKEN = credentials('sonar-token')
+    }
 
     stages {
 
@@ -33,6 +36,18 @@ pipeline {
                 docker rm -f springbootapi || true
                 docker run -d --name springbootapi -p 9000:5000 springbootapi
                 '''
+            }
+        }
+		        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh """
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=java-app \
+                    -Dsonar.host.url=http://13.203.155.21:5000/ \
+                    -Dsonar.login=$SONAR_TOKEN
+                    """
+                }
             }
         }
     }
