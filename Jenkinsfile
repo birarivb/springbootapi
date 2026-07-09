@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f springbootapi || true
-                docker run -d --name springbootapi -p 8080:5000 springbootapi
+                docker run -d --name springbootapi -p 9000:5000 springbootapi
                 '''
             }
         }
